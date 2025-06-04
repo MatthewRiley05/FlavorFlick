@@ -38,19 +38,17 @@ class _SwipeScreenState extends State<SwipeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Scaffold(
-        body: SafeArea(
-          child: Center(
-            child: CardSwiper(
-              cardBuilder:
-                  (
-                    context,
-                    index,
-                    horizontalThresholdPercentage,
-                    verticalThresholdPercentage,
-                  ) => cards[index],
-              cardsCount: cards.length,
-            ),
+      body: SafeArea(
+        child: Center(
+          child: CardSwiper(
+            cardBuilder:
+                (
+                  context,
+                  index,
+                  horizontalThresholdPercentage,
+                  verticalThresholdPercentage,
+                ) => cards[index],
+            cardsCount: cards.length,
           ),
         ),
       ),
