@@ -30,7 +30,7 @@ class CardContainer extends StatelessWidget {
                 children: [
                   Text(
                     "Restaurant Name",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   Wrap(
                     spacing: 16,
