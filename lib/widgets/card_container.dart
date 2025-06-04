@@ -9,15 +9,14 @@ class CardContainer extends StatelessWidget {
       margin: EdgeInsets.all(8),
       child: Column(
         children: [
-          Expanded(
-            flex: 2,
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(12),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: AspectRatio(
+              aspectRatio: 1, // square
+              child: Container(
+                decoration: BoxDecoration(color: Colors.grey[200]),
+                child: const Icon(Icons.image, size: 96, color: Colors.grey),
               ),
-              child: Icon(Icons.image, size: 80, color: Colors.grey[600]),
             ),
           ),
           Expanded(
@@ -54,8 +53,11 @@ class CardContainer extends StatelessWidget {
                   Row(
                     spacing: 16,
                     children: [
-                      Text('0.5 mi', style: TextStyle(fontSize: 14)),
-                      Text('\$\$', style: TextStyle(fontSize: 14)),
+                      Icon(Icons.location_on, color: Colors.red, size: 16),
+                      Text("0.5 m", style: TextStyle(fontSize: 14)),
+                      Text("·", style: TextStyle(fontSize: 14)),
+                      Icon(Icons.payments, color: Colors.green, size: 16),
+                      Text("\$\$\$", style: TextStyle(fontSize: 14)),
                     ],
                   ),
                 ],
