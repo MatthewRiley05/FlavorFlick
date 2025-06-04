@@ -27,28 +27,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('FlavorFlick'),
-        centerTitle: true,
+      appBar: AppBar(title: const Text('FlavorFlick'), centerTitle: true),
+      bottomNavigationBar: NavigationBar(
+        destinations: const <NavigationDestination>[
+          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+          NavigationDestination(icon: Icon(Icons.history), label: 'History'),
+          NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
+        ],
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _onItemTapped,
       ),
-      bottomNavigationBar: NavigationBar(destinations: const <NavigationDestination>[
-        NavigationDestination(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.history),
-          label: 'History',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.settings),
-          label: 'Settings',
-        ),
-      ],
-      selectedIndex: _selectedIndex,
-      onDestinationSelected: _onItemTapped,
-      ),
-      body: IndexedStack(index: _selectedIndex, children: _screens)
+      body: IndexedStack(index: _selectedIndex, children: _screens),
     );
   }
 }
