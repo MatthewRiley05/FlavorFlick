@@ -1,4 +1,4 @@
-# flavor_flick
+# FlavorFlick
 
 A new Flutter project.
 
