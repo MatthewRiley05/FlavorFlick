@@ -10,10 +10,6 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const Center(
-        child: Text('History Screen'),
-      ),
-    );
+    return Scaffold(body: const Center(child: Text('History Screen')));
   }
 }
