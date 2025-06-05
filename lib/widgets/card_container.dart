@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
 
 class CardContainer extends StatelessWidget {
-  const CardContainer({super.key});
+  const CardContainer({
+    super.key,
+    required this.name,
+    required this.tags,
+    required this.latitude,
+    required this.longitude,
+    this.rating,
+    this.price,
+  });
+
+  final String name;
+  final List<String> tags;
+  final double latitude;
+  final double longitude;
+  final double? rating;
+  final String? price;
 
   @override
   Widget build(BuildContext context) {
@@ -29,25 +44,24 @@ class CardContainer extends StatelessWidget {
                 spacing: 16,
                 children: [
                   Text(
-                    "Restaurant Name",
+                    name,
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   Wrap(
                     spacing: 16,
                     children: [
-                      Chip(
-                        label: Text('Italian', style: TextStyle(fontSize: 14)),
-                      ),
-                      Chip(
-                        label: Text('Pizza', style: TextStyle(fontSize: 14)),
-                      ),
+                      for (final tag in tags)
+                        Chip(label: Text(tag, style: TextStyle(fontSize: 14))),
                     ],
                   ),
                   Row(
                     spacing: 16,
                     children: [
                       Icon(Icons.star, color: Colors.amber, size: 16),
-                      Text('4.5', style: TextStyle(fontSize: 14)),
+                      Text(
+                        rating?.toString() ?? 'N/A',
+                        style: TextStyle(fontSize: 14),
+                      ),
                     ],
                   ),
                   Row(
@@ -57,7 +71,7 @@ class CardContainer extends StatelessWidget {
                       Text("0.5 m", style: TextStyle(fontSize: 14)),
                       Text("·", style: TextStyle(fontSize: 14)),
                       Icon(Icons.payments, color: Colors.green, size: 16),
-                      Text("\$\$\$", style: TextStyle(fontSize: 14)),
+                      Text(price ?? '\$\$', style: TextStyle(fontSize: 14)),
                     ],
                   ),
                 ],
