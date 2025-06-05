@@ -31,17 +31,32 @@ class CardContainer extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 16,
+                spacing: 8,
                 children: [
                   Text(
                     bookmark.name,
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   Wrap(
-                    spacing: 16,
+                    spacing: 8,
                     children: [
-                      for (final tag in bookmark.tags)
-                        Chip(label: Text(tag, style: TextStyle(fontSize: 14))),
+                      ...bookmark.tags
+                          .take(3)
+                          .map(
+                            (tag) => Chip(
+                              label: Text(tag, style: TextStyle(fontSize: 10)),
+                            ),
+                          ),
+                      if (bookmark.tags.length > 3)
+                        Chip(
+                          label: Text(
+                            '+${bookmark.tags.length - 3} more',
+                            style: TextStyle(fontSize: 10),
+                          ),
+                          backgroundColor: Colors.grey[300],
+                        ),
                     ],
                   ),
                   Row(
