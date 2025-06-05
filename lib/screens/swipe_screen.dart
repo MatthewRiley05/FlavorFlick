@@ -155,7 +155,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
           candidates = sorted
               .map<String>(
                 (restaurant) =>
-                    restaurant['name']?.toString() ?? 'Unknown Restaurant',
+                    restaurant.name?.toString() ?? 'Unknown Restaurant',
               )
               .toList();
         } else {
