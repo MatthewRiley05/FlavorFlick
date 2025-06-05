@@ -15,14 +15,8 @@ class SwipeScreen extends StatefulWidget {
 class _SwipeScreenState extends State<SwipeScreen> {
   final CardSwiperController controller = CardSwiperController();
 
-  // Variables to hold fetched and processed data
-  String? html;
-  dynamic json;
-  dynamic parsed;
-  dynamic sorted;
-  List<String> candidates = [];
-  List<CardContainer> cards = [];
   bool isLoading = true;
+  List<BookmarkHtml> bookmarks = [];
 
   @override
   void initState() {
@@ -32,18 +26,22 @@ class _SwipeScreenState extends State<SwipeScreen> {
 
   Future<void> _fetchData() async {
     try {
-      debugPrint("Fetching HTML data...");
-      html = await fetchBookmarksHtml(
-        "https://www.openrice.com/en/gourmet/bookmarkrestaurant.htm?userid=69106986&region=&bpcatId=17",
+      final raw = await fetchBookmarksHtml(
+        'https://www.openrice.com/en/gourmet/bookmarkrestaurant.htm'
+        '?userid=69106986&region=&bpcatId=17',
       );
-    } catch (e) {
-      debugPrint('Error fetching HTML: $e');
-    }
-    try {
-      debugPrint("Extracting JSON data...");
-      json = parseBookmarks(html!);
-    } catch (e) {
-      debugPrint('Error extracting JSON: $e');
+
+      final parsed = parseBookmarks(raw); // <— our parser
+
+      // TODO optional: hydrate lat/lng + sortNearest(parsed);
+
+      setState(() {
+        bookmarks = parsed; // store the data
+        isLoading = false;
+      });
+    } catch (e, st) {
+      debugPrint('Bookmark load failed: $e\n$st');
+      if (mounted) setState(() => isLoading = false);
     }
   }
 
@@ -54,20 +52,21 @@ class _SwipeScreenState extends State<SwipeScreen> {
         child: Center(
           child: isLoading
               ? const CircularProgressIndicator()
-              : cards.isNotEmpty
-              ? CardSwiper(
+              : bookmarks.isEmpty
+              ? const Text('No cards to display')
+              : CardSwiper(
+                  controller: controller,
+                  cardsCount: bookmarks.length,
+                  numberOfCardsDisplayed: 3,
+                  isLoop: false,
                   cardBuilder:
                       (
                         context,
                         index,
                         horizontalThresholdPercentage,
                         verticalThresholdPercentage,
-                      ) => cards[index],
-                  cardsCount: cards.length,
-                  numberOfCardsDisplayed: 3,
-                  isLoop: false,
-                )
-              : const Text('No cards to display'),
+                      ) => CardContainer(bookmark: bookmarks[index]),
+                ),
         ),
       ),
     );
