@@ -73,7 +73,6 @@ class _SwipeScreenState extends State<SwipeScreen> {
           }
 
           // For now, create mock data to test the card rendering
-          // For now, create mock data to test the card rendering
           debugPrint("🧪 Using mock data for testing");
           json = {
             "bookmark": [
