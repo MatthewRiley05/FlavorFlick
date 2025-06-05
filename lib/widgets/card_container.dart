@@ -1,22 +1,10 @@
+import 'package:flavor_flick/services/bookmark_model.dart';
 import 'package:flutter/material.dart';
 
 class CardContainer extends StatelessWidget {
-  const CardContainer({
-    super.key,
-    required this.name,
-    required this.tags,
-    required this.latitude,
-    required this.longitude,
-    this.rating,
-    this.price,
-  });
+  const CardContainer({super.key, required this.bookmark});
 
-  final String name;
-  final List<String> tags;
-  final double latitude;
-  final double longitude;
-  final double? rating;
-  final String? price;
+  final BookmarkHtml bookmark;
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +32,13 @@ class CardContainer extends StatelessWidget {
                 spacing: 16,
                 children: [
                   Text(
-                    name,
+                    bookmark.name,
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   Wrap(
                     spacing: 16,
                     children: [
-                      for (final tag in tags)
+                      for (final tag in bookmark.tags)
                         Chip(label: Text(tag, style: TextStyle(fontSize: 14))),
                     ],
                   ),
@@ -59,7 +47,7 @@ class CardContainer extends StatelessWidget {
                     children: [
                       Icon(Icons.star, color: Colors.amber, size: 16),
                       Text(
-                        rating?.toString() ?? 'N/A',
+                        bookmark.rating.toString(),
                         style: TextStyle(fontSize: 14),
                       ),
                     ],
@@ -71,7 +59,7 @@ class CardContainer extends StatelessWidget {
                       Text("0.5 m", style: TextStyle(fontSize: 14)),
                       Text("·", style: TextStyle(fontSize: 14)),
                       Icon(Icons.payments, color: Colors.green, size: 16),
-                      Text(price ?? '\$\$', style: TextStyle(fontSize: 14)),
+                      Text(bookmark.price, style: TextStyle(fontSize: 14)),
                     ],
                   ),
                 ],

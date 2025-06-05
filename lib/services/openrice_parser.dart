@@ -32,11 +32,19 @@ BookmarkHtml _bookmarkFromPoi(Element poi) {
     '.sprite-global-icon6 ~ .content',
   ).text.trim();
 
+  double rating = 0;
+  final reviewDivs = poi.querySelectorAll('.reviewScore div');
+  if (reviewDivs.length >= 2) {
+    final txt = reviewDivs.last.text.replaceAll(RegExp(r'[^\d.]'), '').trim();
+    rating = double.tryParse(txt) ?? 0;
+  }
+
   return BookmarkHtml(
     id: int.parse(poi.attributes['data-poiid']!),
     name: _firstOrEmpty(poi, '.title a').text.trim(),
     address: address,
     tags: tags,
     price: price,
+    rating: rating,
   );
 }

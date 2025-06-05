@@ -41,7 +41,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
     }
     try {
       debugPrint("Extracting JSON data...");
-      json = extractJson(html!);
+      json = parseBookmarks(html!);
     } catch (e) {
       debugPrint('Error extracting JSON: $e');
     }
