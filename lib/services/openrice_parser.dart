@@ -33,10 +33,24 @@ BookmarkHtml _bookmarkFromPoi(Element poi) {
   ).text.trim();
 
   double rating = 0;
-  final reviewDivs = poi.querySelectorAll('.reviewScore div');
-  if (reviewDivs.length >= 2) {
-    final txt = reviewDivs.last.text.replaceAll(RegExp(r'[^\d.]'), '').trim();
+  final ratingDiv = poi.querySelector('.reviewScore > .FL.txt_bold.ML5');
+
+  if (ratingDiv != null) {
+    final txt = ratingDiv.text.replaceAll(RegExp(r'[^\d.]'), '').trim();
     rating = double.tryParse(txt) ?? 0;
+  }
+
+  String imageUrl = '';
+  final imgStyle =
+      poi.querySelector('.doorPhoto img')?.attributes['style'] ?? '';
+
+  final match = RegExp(
+    r'background-image:\s*url\(([^)]+)\)',
+  ).firstMatch(imgStyle);
+
+  if (match != null) {
+    imageUrl = match.group(1)!;
+    if (imageUrl.startsWith('//')) imageUrl = 'https:$imageUrl';
   }
 
   return BookmarkHtml(
@@ -46,5 +60,6 @@ BookmarkHtml _bookmarkFromPoi(Element poi) {
     tags: tags,
     price: price,
     rating: rating,
+    imageUrl: imageUrl,
   );
 }

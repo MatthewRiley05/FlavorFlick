@@ -15,11 +15,13 @@ class CardContainer extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: AspectRatio(
-              aspectRatio: 1, // square
-              child: Container(
-                decoration: BoxDecoration(color: Colors.grey[200]),
-                child: const Icon(Icons.image, size: 96, color: Colors.grey),
-              ),
+              aspectRatio: 1,
+              child: bookmark.imageUrl.isEmpty
+                  ? Container(
+                      color: Colors.grey[300],
+                      child: const Icon(Icons.image, size: 96),
+                    )
+                  : Image.network(bookmark.imageUrl, fit: BoxFit.cover),
             ),
           ),
           Expanded(

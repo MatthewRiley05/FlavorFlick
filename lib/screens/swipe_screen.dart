@@ -31,12 +31,10 @@ class _SwipeScreenState extends State<SwipeScreen> {
         '?userid=69106986&region=&bpcatId=17',
       );
 
-      final parsed = parseBookmarks(raw); // <— our parser
-
-      // TODO optional: hydrate lat/lng + sortNearest(parsed);
+      final parsed = parseBookmarks(raw);
 
       setState(() {
-        bookmarks = parsed; // store the data
+        bookmarks = parsed;
         isLoading = false;
       });
     } catch (e, st) {
@@ -57,7 +55,6 @@ class _SwipeScreenState extends State<SwipeScreen> {
               : CardSwiper(
                   controller: controller,
                   cardsCount: bookmarks.length,
-                  numberOfCardsDisplayed: 3,
                   isLoop: false,
                   cardBuilder:
                       (

@@ -1,5 +1,6 @@
 class BookmarkHtml {
-  const BookmarkHtml({
+  BookmarkHtml({
+    required this.imageUrl,
     required this.id,
     required this.name,
     required this.address,
@@ -10,12 +11,13 @@ class BookmarkHtml {
     this.lng,
   });
 
+  final String imageUrl;
   final int id;
   final String name;
   final String address;
   final List<String> tags;
   final String price;
-  final double rating;
-  final double? lat;
-  final double? lng;
+  double rating;
+  double? lat;
+  double? lng;
 }
