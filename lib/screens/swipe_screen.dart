@@ -118,9 +118,33 @@ class _SwipeScreenState extends State<SwipeScreen> {
         debugPrint("💥 Parse error: $parseError");
         // For testing, let's bypass the parsing and create test data directly
         parsed = [
-          Bookmark(name: "Test Restaurant 1", latitude: 22.3193, longitude: 114.1694),
-          Bookmark(name: "Test Restaurant 2", latitude: 22.3200, longitude: 114.1700),
-          Bookmark(name: "Test Restaurant 3", latitude: 22.3210, longitude: 114.1710),
+          Bookmark.fromJson({
+            'poiid': '1',
+            'shopName': 'Test Restaurant 1',
+            'latitude': 22.3193,
+            'longitude': 114.1694,
+            'cuisine': ['Asian'],
+            'rating': 4.5,
+            'priceRange': '\$\$',
+          }),
+          Bookmark.fromJson({
+            'poiid': '2',
+            'shopName': 'Test Restaurant 2',
+            'latitude': 22.3200,
+            'longitude': 114.1700,
+            'cuisine': ['Italian'],
+            'rating': 4.0,
+            'priceRange': '\$\$\$',
+          }),
+          Bookmark.fromJson({
+            'poiid': '3',
+            'shopName': 'Test Restaurant 3',
+            'latitude': 22.3210,
+            'longitude': 114.1710,
+            'cuisine': ['Chinese'],
+            'rating': 4.2,
+            'priceRange': '\$',
+          }),
         ];
         debugPrint("🔧 Using fallback parsed data: $parsed");
       }
