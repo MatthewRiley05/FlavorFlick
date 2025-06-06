@@ -57,7 +57,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
         child: Center(
           child: isLoading
               ? const CircularProgressIndicator()
-              : isEmpty
+              : bookmarks.isEmpty
               ? const Text('No cards to display')
               : CardSwiper(
                   controller: widget.controller,
