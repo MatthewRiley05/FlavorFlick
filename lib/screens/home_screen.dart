@@ -73,10 +73,29 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       bottomNavigationBar: NavigationBar(
-        destinations: const <NavigationDestination>[
-          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.history), label: 'History'),
-          NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
+        destinations: <NavigationDestination>[
+          NavigationDestination(
+            icon: Icon(
+              _selectedIndex == 0 ? Icons.home_rounded : Icons.home_outlined,
+            ),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(
+              _selectedIndex == 1
+                  ? Icons.history_rounded
+                  : Icons.history_outlined,
+            ),
+            label: 'History',
+          ),
+          NavigationDestination(
+            icon: Icon(
+              _selectedIndex == 2
+                  ? Icons.settings_rounded
+                  : Icons.settings_outlined,
+            ),
+            label: 'Settings',
+          ),
         ],
         selectedIndex: _selectedIndex,
         onDestinationSelected: _onItemTapped,
