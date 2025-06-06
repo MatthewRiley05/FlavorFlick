@@ -1,7 +1,10 @@
 import 'package:flavor_flick/screens/home_screen.dart';
+import 'package:flavor_flick/services/prefs_helper.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await PrefService.init();
   runApp(const MyApp());
 }
 

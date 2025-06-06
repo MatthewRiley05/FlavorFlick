@@ -1,4 +1,4 @@
-import 'package:flavor_flick/services/bookmark_model.dart';
+import 'package:flavor_flick/models/bookmark_model.dart';
 import 'package:flutter/material.dart';
 
 class CardContainer extends StatelessWidget {
