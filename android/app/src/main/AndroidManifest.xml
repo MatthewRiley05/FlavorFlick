@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="flavor_flick"
+        android:label="FlavorFlick"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
