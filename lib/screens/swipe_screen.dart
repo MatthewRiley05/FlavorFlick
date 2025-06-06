@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
 class SwipeScreen extends StatefulWidget {
-  const SwipeScreen({super.key});
+  const SwipeScreen({super.key, this.controller});
+
+  final CardSwiperController? controller;
 
   @override
   State<SwipeScreen> createState() => _SwipeScreenState();
 }
 
 class _SwipeScreenState extends State<SwipeScreen> {
-  final CardSwiperController controller = CardSwiperController();
-
   bool isLoading = true;
   List<BookmarkHtml> bookmarks = [];
 
@@ -53,7 +53,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
               : bookmarks.isEmpty
               ? const Text('No cards to display')
               : CardSwiper(
-                  controller: controller,
+                  controller: widget.controller,
                   cardsCount: bookmarks.length,
                   isLoop: false,
                   cardBuilder:
