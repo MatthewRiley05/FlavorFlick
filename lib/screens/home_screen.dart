@@ -61,15 +61,17 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.replay),
-            tooltip: 'Undo',
-            onPressed: () {
-              if (_selectedIndex == 0) {
-                _cardController.undo();
-              }
-            },
-          ),
+          if (_selectedIndex == 0) ...{
+            IconButton(
+              icon: const Icon(Icons.replay),
+              tooltip: 'Undo',
+              onPressed: () {
+                if (_selectedIndex == 0) {
+                  _cardController.undo();
+                }
+              },
+            ),
+          },
         ],
       ),
       bottomNavigationBar: NavigationBar(
