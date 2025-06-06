@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+  const SettingsScreen({super.key, required this.onBookmarkSubmitted});
+
+  final ValueChanged<String> onBookmarkSubmitted;
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -29,9 +31,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
+      widget.onBookmarkSubmitted.call(_linkController.text);
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('Valid bookmark link!')));
+      FocusScope.of(context).unfocus();
     }
   }
 

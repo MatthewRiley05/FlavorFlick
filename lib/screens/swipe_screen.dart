@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
 class SwipeScreen extends StatefulWidget {
-  const SwipeScreen({super.key, this.controller});
+  const SwipeScreen({super.key, required this.bookmarkLink, this.controller});
 
+  final String bookmarkLink;
   final CardSwiperController? controller;
 
   @override
@@ -16,6 +17,7 @@ class SwipeScreen extends StatefulWidget {
 
 class _SwipeScreenState extends State<SwipeScreen> {
   bool isLoading = true;
+  bool isEmpty = false;
   List<BookmarkHtml> bookmarks = [];
 
   @override
@@ -26,10 +28,15 @@ class _SwipeScreenState extends State<SwipeScreen> {
 
   Future<void> _fetchData() async {
     try {
-      final raw = await fetchBookmarksHtml(
-        'https://www.openrice.com/en/gourmet/bookmarkrestaurant.htm'
-        '?userid=69106986&region=&bpcatId=17',
-      );
+      if (widget.bookmarkLink.isEmpty) {
+        setState(() {
+          isLoading = false;
+          isEmpty = true;
+        });
+        return;
+      }
+
+      final raw = await fetchBookmarksHtml(widget.bookmarkLink);
 
       final parsed = parseBookmarks(raw);
 
@@ -50,7 +57,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
         child: Center(
           child: isLoading
               ? const CircularProgressIndicator()
-              : bookmarks.isEmpty
+              : isEmpty
               ? const Text('No cards to display')
               : CardSwiper(
                   controller: widget.controller,

@@ -13,18 +13,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  String bookmarkLink = "";
   late final CardSwiperController _cardController;
-  late final List<Widget> _screens;
 
   @override
   void initState() {
     super.initState();
     _cardController = CardSwiperController();
-    _screens = <Widget>[
-      SwipeScreen(controller: _cardController),
-      const HistoryScreen(),
-      const SettingsScreen(),
-    ];
   }
 
   @override
@@ -38,6 +33,23 @@ class _HomeScreenState extends State<HomeScreen> {
       _selectedIndex = index;
     });
   }
+
+  void _updateBookmarkLink(String newLink) {
+    setState(() {
+      bookmarkLink = newLink;
+      _selectedIndex = 0;
+    });
+  }
+
+  List<Widget> get _screens => [
+    SwipeScreen(
+      key: ValueKey(bookmarkLink),
+      bookmarkLink: bookmarkLink,
+      controller: _cardController,
+    ),
+    const HistoryScreen(),
+    SettingsScreen(onBookmarkSubmitted: _updateBookmarkLink),
+  ];
 
   @override
   Widget build(BuildContext context) {
