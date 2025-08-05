@@ -66,21 +66,26 @@ class _SwipeScreenState extends State<SwipeScreen> {
 
       final pos = await _userLocation.current();
       if (pos != null) {
-        await Future.wait(
-          parsed.map((b) async {
-            try {
-              final distanceResult = await _routes.distance(
-                originLat: pos.latitude,
-                originLng: pos.longitude,
-                destAddress: b.address,
-              );
-              b.distance = distanceResult;
-              debugPrint('Distance to ${b.name}: ${distanceResult?.pretty}');
-            } catch (e) {
-              debugPrint('Failed to get distance for ${b.name}: $e');
-            }
-          }),
-        );
+        // Limit concurrent requests to avoid rate limits
+        const int batchSize = 5;
+        for (int i = 0; i < parsed.length; i += batchSize) {
+          final batch = parsed.skip(i).take(batchSize).toList();
+          await Future.wait(
+            batch.map((b) async {
+              try {
+                final distanceResult = await _routes.distance(
+                  originLat: pos.latitude,
+                  originLng: pos.longitude,
+                  destAddress: b.address,
+                );
+                b.distance = distanceResult;
+                debugPrint('Distance to ${b.name}: ${distanceResult?.pretty}');
+              } catch (e) {
+                debugPrint('Failed to get distance for ${b.name}: $e');
+              }
+            }),
+          );
+        }
       }
 
       setState(() {
