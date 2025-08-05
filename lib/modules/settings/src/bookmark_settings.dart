@@ -1,3 +1,4 @@
+import 'package:flavor_flick/modules/settings/src/bookmark_link_dialog.dart';
 import 'package:flavor_flick/services/pref_keys.dart';
 import 'package:flavor_flick/services/prefs_helper.dart';
 import 'package:flutter/material.dart';
@@ -11,81 +12,84 @@ class BookmarkSettings extends StatefulWidget {
 }
 
 class _BookmarkSettingsState extends State<BookmarkSettings> {
-  final _formKey = GlobalKey<FormState>();
-  final _linkCtrl = TextEditingController();
+  String _bookmarkLink = '';
 
   @override
   void initState() {
     super.initState();
-    _linkCtrl.text = PrefService.instance.getString(PrefKey.bookmarkLink) ?? '';
+    _loadBookmarkLink();
   }
 
-  String? _validate(String? v) {
-    final r = RegExp(
-      r'^https://www\.openrice\.com/en/gourmet/bookmarkrestaurant\.htm\?userid=\d+&region=.*&bpcatId=\d+$',
+  void _loadBookmarkLink() {
+    final savedLink = PrefService.instance.getString(PrefKey.bookmarkLink);
+    if (savedLink != null && savedLink.isNotEmpty) {
+      setState(() {
+        _bookmarkLink = savedLink;
+      });
+    }
+  }
+
+  Future<void> _saveBookmarkLink(String link) async {
+    await PrefService.instance.setString(PrefKey.bookmarkLink, link);
+    widget.onBookmarkSubmitted(link);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 16,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            'Bookmark Settings',
+            style: TextStyle(
+              fontSize: 16,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+        ),
+        Column(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.bookmark_rounded),
+              title: const Text('OpenRice Bookmark Link'),
+              subtitle: Text(
+                _bookmarkLink.isEmpty
+                    ? 'Not configured'
+                    : '${_bookmarkLink.substring(0, _bookmarkLink.length > 25 ? 25 : _bookmarkLink.length)}...',
+              ),
+              trailing: const Icon(Icons.chevron_right_rounded),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 0,
+              ),
+              onTap: () => _showBookmarkLinkDialog(),
+            ),
+          ],
+        ),
+      ],
     );
-    return (v == null || v.isEmpty)
-        ? 'Please enter a bookmark link'
-        : (!r.hasMatch(v) ? 'Invalid OpenRice link' : null);
   }
 
-  Future<void> _save() async {
-    if (_formKey.currentState!.validate()) {
-      final link = _linkCtrl.text.trim();
+  Future<void> _showBookmarkLinkDialog() async {
+    final result = await showDialog<String>(
+      context: context,
+      builder: (context) => BookmarkLinkDialog(currentLink: _bookmarkLink),
+    );
 
-      await PrefService.instance.setString(PrefKey.bookmarkLink, link);
-      widget.onBookmarkSubmitted(link);
+    if (result != null) {
+      setState(() {
+        _bookmarkLink = result;
+      });
+      await _saveBookmarkLink(result);
 
       if (mounted) {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text('Bookmark saved')));
-        FocusScope.of(context).unfocus();
       }
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 16,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              'Bookmark Settings',
-              style: TextStyle(
-                fontSize: 16,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextFormField(
-              controller: _linkCtrl,
-              validator: _validate,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText:
-                    'https://www.openrice.com/en/gourmet/bookmarkrestaurant.htm?userid=...',
-              ),
-            ),
-          ),
-          Center(
-            child: FilledButton(onPressed: _save, child: const Text('Save')),
-          ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _linkCtrl.dispose();
-    super.dispose();
   }
 }
