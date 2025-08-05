@@ -59,7 +59,9 @@ class _BookmarkSettingsState extends State<BookmarkSettings> {
               subtitle: Text(
                 _bookmarkLink.isEmpty
                     ? 'Not configured'
-                    : '${_bookmarkLink.substring(0, _bookmarkLink.length > 25 ? 25 : _bookmarkLink.length)}...',
+                    : _bookmarkLink.length > 25
+                        ? '${_bookmarkLink.substring(0, 25)}...'
+                        : _bookmarkLink,
               ),
               trailing: const Icon(Icons.chevron_right_rounded),
               contentPadding: const EdgeInsets.symmetric(
