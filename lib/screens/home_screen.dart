@@ -65,11 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               icon: const Icon(Icons.replay),
               tooltip: 'Undo',
-              onPressed: () {
-                if (_selectedIndex == 0) {
-                  _cardController.undo();
-                }
-              },
+              onPressed: () => _cardController.undo(),
             ),
           },
         ],
