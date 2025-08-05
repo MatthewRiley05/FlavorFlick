@@ -1,3 +1,4 @@
+import 'package:flavor_flick/modules/settings/src/map_settings.dart';
 import 'package:flavor_flick/services/pref_keys.dart';
 import 'package:flavor_flick/services/prefs_helper.dart';
 import 'package:flutter/material.dart';
@@ -46,24 +47,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   @override
-  Widget build(BuildContext ctx) => Scaffold(
+  Widget build(BuildContext context) => Scaffold(
     body: SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 16,
             children: [
-              const Text('Bookmark Settings', style: TextStyle(fontSize: 16)),
-              TextFormField(
-                controller: _linkCtrl,
-                validator: _validate,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText:
-                      'https://www.openrice.com/en/gourmet/bookmarkrestaurant.htm?userid=...',
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  'Bookmark Settings',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: TextFormField(
+                  controller: _linkCtrl,
+                  validator: _validate,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText:
+                        'https://www.openrice.com/en/gourmet/bookmarkrestaurant.htm?userid=...',
+                  ),
                 ),
               ),
               Center(
@@ -72,6 +85,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: const Text('Save'),
                 ),
               ),
+              const SizedBox(height: 16),
+              MapSettings(),
             ],
           ),
         ),
