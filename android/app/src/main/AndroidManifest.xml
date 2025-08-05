@@ -56,7 +56,7 @@
         </intent>
         <intent>
             <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="comgooglemaps" />
+            <data android:scheme="googlemaps" />
         </intent>
     </queries>
 </manifest>
