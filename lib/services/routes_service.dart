@@ -34,6 +34,7 @@ class RoutesService {
       );
 
       if (res.statusCode != 200) {
+        debugPrint('HTTP error: statusCode=${res.statusCode}, body=${res.body}');
         return null;
       }
 
