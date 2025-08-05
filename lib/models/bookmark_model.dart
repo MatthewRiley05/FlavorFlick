@@ -15,5 +15,5 @@ class BookmarkHtml {
   final String address;
   final List<String> tags;
   final String price;
-  double rating;
+  final double rating;
 }
