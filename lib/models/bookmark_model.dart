@@ -1,5 +1,3 @@
-import 'package:flavor_flick/models/distance_result.dart';
-
 class BookmarkHtml {
   BookmarkHtml({
     required this.imageUrl,
@@ -9,7 +7,6 @@ class BookmarkHtml {
     required this.tags,
     required this.price,
     required this.rating,
-    this.distance,
   });
 
   final String imageUrl;
@@ -19,5 +16,4 @@ class BookmarkHtml {
   final List<String> tags;
   final String price;
   final double rating;
-  DistanceResult? distance;
 }

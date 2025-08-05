@@ -73,10 +73,7 @@ class CardContainer extends StatelessWidget {
                     spacing: 16,
                     children: [
                       Icon(Icons.location_on, color: Colors.red, size: 16),
-                      Text(
-                        bookmark.distance?.pretty ?? '—',
-                        style: TextStyle(fontSize: 14),
-                      ),
+                      Text("0.5 m", style: TextStyle(fontSize: 14)),
                       Text("·", style: TextStyle(fontSize: 14)),
                       Icon(Icons.payments, color: Colors.green, size: 16),
                       Text(bookmark.price, style: TextStyle(fontSize: 14)),
