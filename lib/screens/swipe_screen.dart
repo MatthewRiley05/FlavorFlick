@@ -102,7 +102,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
 
   Future<void> _openInGoogleMaps(BookmarkHtml bookmark) async {
     try {
-      final query = Uri.encodeComponent('${bookmark.name} ${bookmark.address}');
+      final query = Uri.encodeComponent('${bookmark.name ?? ''} ${bookmark.address ?? ''}');
       final url = 'https://www.google.com/maps/dir/?api=1&destination=$query';
 
       debugPrint('Attempting to open: $url');
