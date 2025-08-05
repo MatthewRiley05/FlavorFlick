@@ -52,7 +52,7 @@ class _SearchTypeDialogState extends State<SearchTypeDialog> {
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Cancel'),
         ),
-        TextButton(
+        FilledButton(
           onPressed: () => Navigator.of(context).pop(_selection),
           child: const Text('OK'),
         ),
