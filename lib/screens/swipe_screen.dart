@@ -32,9 +32,11 @@ class _SwipeScreenState extends State<SwipeScreen> {
   void initState() {
     super.initState();
     final apiKey = dotenv.env['ROUTES_API_KEY'] ?? '';
-    debugPrint(
-      'API Key loaded: ${apiKey.isNotEmpty ? "Yes (${apiKey.length} chars)" : "No"}',
-    );
+    if (kDebugMode) {
+      debugPrint(
+        'API Key loaded: ${apiKey.isNotEmpty ? "Yes (${apiKey.length} chars)" : "No"}',
+      );
+    }
     _routes = RoutesService(apiKey);
     _initAndFetch();
   }
