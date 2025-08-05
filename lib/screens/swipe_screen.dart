@@ -7,9 +7,11 @@ import 'package:flavor_flick/services/pref_keys.dart';
 import 'package:flavor_flick/services/prefs_helper.dart';
 import 'package:flavor_flick/services/routes_service.dart';
 import 'package:flavor_flick/widgets/card_container.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SwipeScreen extends StatefulWidget {
   const SwipeScreen({super.key, required this.bookmarkLink, this.controller});
@@ -98,6 +100,36 @@ class _SwipeScreenState extends State<SwipeScreen> {
     }
   }
 
+  Future<void> _openInGoogleMaps(BookmarkHtml bookmark) async {
+    try {
+      final query = Uri.encodeComponent('${bookmark.name ?? ''} ${bookmark.address ?? ''}');
+      final url = 'https://www.google.com/maps/dir/?api=1&destination=$query';
+
+      debugPrint('Attempting to open: $url');
+
+      final uri = Uri.parse(url);
+
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+        debugPrint('Successfully launched Google Maps');
+      } else {
+        debugPrint('canLaunchUrl returned false for: $url');
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Could not open Google Maps')),
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint('Failed to open Google Maps: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error opening Google Maps')),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget body;
@@ -113,6 +145,14 @@ class _SwipeScreenState extends State<SwipeScreen> {
         controller: widget.controller,
         cardsCount: _bookmarks.length,
         isLoop: false,
+        onSwipe: (previousIndex, currentIndex, direction) {
+          if (direction == CardSwiperDirection.right) {
+            if (previousIndex >= 0 && previousIndex < _bookmarks.length) {
+              _openInGoogleMaps(_bookmarks[previousIndex]);
+            }
+          }
+          return true;
+        },
         cardBuilder: (_, index, __, ___) =>
             CardContainer(bookmark: _bookmarks[index]),
       );
