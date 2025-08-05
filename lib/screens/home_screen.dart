@@ -1,5 +1,5 @@
 import 'package:flavor_flick/screens/history_screen.dart';
-import 'package:flavor_flick/screens/settings_screen.dart';
+import 'package:flavor_flick/modules/settings/src/screens/settings_screen.dart';
 import 'package:flavor_flick/screens/swipe_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -14,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   String bookmarkLink = "";
+  String _searchType = "Directions";
   late final CardSwiperController _cardController;
 
   @override
@@ -37,18 +38,28 @@ class _HomeScreenState extends State<HomeScreen> {
   void _updateBookmarkLink(String newLink) {
     setState(() {
       bookmarkLink = newLink;
-      _selectedIndex = 0;
+      _selectedIndex = 0; // Reset to Home screen
+    });
+  }
+
+  void _updateSearchType(String searchType) {
+    setState(() {
+      _searchType = searchType;
     });
   }
 
   List<Widget> get _screens => [
     SwipeScreen(
-      key: ValueKey(bookmarkLink),
+      key: ValueKey('$bookmarkLink-$_searchType'),
+      searchType: _searchType,
       bookmarkLink: bookmarkLink,
       controller: _cardController,
     ),
     const HistoryScreen(),
-    SettingsScreen(onBookmarkSubmitted: _updateBookmarkLink),
+    SettingsScreen(
+      onBookmarkSubmitted: _updateBookmarkLink,
+      onSearchTypeChanged: _updateSearchType,
+    ),
   ];
 
   @override

@@ -14,9 +14,15 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SwipeScreen extends StatefulWidget {
-  const SwipeScreen({super.key, required this.bookmarkLink, this.controller});
+  const SwipeScreen({
+    super.key,
+    required this.bookmarkLink,
+    required this.searchType,
+    this.controller,
+  });
 
   final String bookmarkLink;
+  final String searchType;
   final CardSwiperController? controller;
 
   @override
@@ -103,7 +109,10 @@ class _SwipeScreenState extends State<SwipeScreen> {
   Future<void> _openInGoogleMaps(BookmarkHtml bookmark) async {
     try {
       final query = Uri.encodeComponent('${bookmark.name} ${bookmark.address}');
-      final url = 'https://www.google.com/maps/dir/?api=1&destination=$query';
+
+      final url = widget.searchType == 'Directions'
+          ? 'https://www.google.com/maps/dir/?api=1&destination=$query'
+          : 'https://www.google.com/maps/search/?api=1&query=$query';
 
       debugPrint('Attempting to open: $url');
 
