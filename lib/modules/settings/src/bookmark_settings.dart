@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class BookmarkSettings extends StatefulWidget {
   const BookmarkSettings({super.key, required this.onBookmarkSubmitted});
+
   final ValueChanged<String> onBookmarkSubmitted;
 
   @override

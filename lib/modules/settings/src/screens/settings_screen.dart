@@ -3,8 +3,13 @@ import 'package:flavor_flick/modules/settings/src/map_settings.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key, required this.onBookmarkSubmitted});
+  const SettingsScreen({
+    super.key,
+    required this.onBookmarkSubmitted,
+    required this.onSearchTypeChanged,
+  });
   final ValueChanged<String> onBookmarkSubmitted;
+  final ValueChanged<String> onSearchTypeChanged;
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -20,7 +25,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           spacing: 16,
           children: [
             BookmarkSettings(onBookmarkSubmitted: widget.onBookmarkSubmitted),
-            MapSettings(),
+            MapSettings(onSearchTypeChanged: widget.onSearchTypeChanged),
           ],
         ),
       ),

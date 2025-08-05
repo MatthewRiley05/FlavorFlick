@@ -4,7 +4,9 @@ import 'package:flavor_flick/services/prefs_helper.dart';
 import 'package:flutter/material.dart';
 
 class MapSettings extends StatefulWidget {
-  const MapSettings({super.key});
+  const MapSettings({super.key, required this.onSearchTypeChanged});
+
+  final ValueChanged<String> onSearchTypeChanged;
 
   @override
   State<MapSettings> createState() => _MapSettingsState();
@@ -30,6 +32,7 @@ class _MapSettingsState extends State<MapSettings> {
 
   Future<void> _saveSearchType(String searchType) async {
     await PrefService.instance.setString(PrefKey.searchType, searchType);
+    widget.onSearchTypeChanged(searchType);
   }
 
   @override
