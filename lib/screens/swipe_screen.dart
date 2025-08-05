@@ -1,12 +1,15 @@
 // lib/screens/swipe_screen.dart
 import 'package:flavor_flick/models/bookmark_model.dart';
 import 'package:flavor_flick/services/html_fetcher.dart';
+import 'package:flavor_flick/services/location_service.dart';
 import 'package:flavor_flick/services/openrice_parser.dart';
 import 'package:flavor_flick/services/pref_keys.dart';
 import 'package:flavor_flick/services/prefs_helper.dart';
+import 'package:flavor_flick/services/routes_service.dart';
 import 'package:flavor_flick/widgets/card_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class SwipeScreen extends StatefulWidget {
   const SwipeScreen({super.key, required this.bookmarkLink, this.controller});
@@ -22,10 +25,19 @@ class _SwipeScreenState extends State<SwipeScreen> {
   bool _isLoading = true;
   String _activeLink = '';
   List<BookmarkHtml> _bookmarks = [];
+  final _userLocation = LocationService();
+  late final RoutesService _routes;
 
   @override
   void initState() {
     super.initState();
+    final apiKey = dotenv.env['ROUTES_API_KEY'] ?? '';
+    if (kDebugMode) {
+      debugPrint(
+        'API Key loaded: ${apiKey.isNotEmpty ? "Yes (${apiKey.length} chars)" : "No"}',
+      );
+    }
+    _routes = RoutesService(apiKey);
     _initAndFetch();
   }
 
@@ -47,7 +59,34 @@ class _SwipeScreenState extends State<SwipeScreen> {
   Future<void> _fetchData(String url) async {
     try {
       final raw = await fetchBookmarksHtml(url);
+      debugPrint('Raw HTML length: ${raw.length}');
+
       final parsed = parseBookmarks(raw);
+      debugPrint('Parsed bookmarks count: ${parsed.length}');
+
+      final pos = await _userLocation.current();
+      if (pos != null) {
+        // Limit concurrent requests to avoid rate limits
+        const int batchSize = 5;
+        for (int i = 0; i < parsed.length; i += batchSize) {
+          final batch = parsed.skip(i).take(batchSize).toList();
+          await Future.wait(
+            batch.map((b) async {
+              try {
+                final distanceResult = await _routes.distance(
+                  originLat: pos.latitude,
+                  originLng: pos.longitude,
+                  destAddress: b.address,
+                );
+                b.distance = distanceResult;
+                debugPrint('Distance to ${b.name}: ${distanceResult?.pretty}');
+              } catch (e) {
+                debugPrint('Failed to get distance for ${b.name}: $e');
+              }
+            }),
+          );
+        }
+      }
 
       setState(() {
         _bookmarks = parsed;
