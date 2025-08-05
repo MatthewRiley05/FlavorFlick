@@ -7,8 +7,6 @@ class BookmarkHtml {
     required this.tags,
     required this.price,
     required this.rating,
-    this.lat,
-    this.lng,
   });
 
   final String imageUrl;
@@ -17,7 +15,5 @@ class BookmarkHtml {
   final String address;
   final List<String> tags;
   final String price;
-  double rating;
-  double? lat;
-  double? lng;
+  final double rating;
 }
