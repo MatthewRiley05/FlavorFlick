@@ -147,7 +147,9 @@ class _SwipeScreenState extends State<SwipeScreen> {
         isLoop: false,
         onSwipe: (previousIndex, currentIndex, direction) {
           if (direction == CardSwiperDirection.right) {
-            _openInGoogleMaps(_bookmarks[previousIndex]);
+            if (previousIndex >= 0 && previousIndex < _bookmarks.length) {
+              _openInGoogleMaps(_bookmarks[previousIndex]);
+            }
           }
           return true;
         },
