@@ -1,5 +1,4 @@
 import 'package:flavor_flick/modules/settings/src/appearance_settings_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppearanceSettings extends StatelessWidget {
