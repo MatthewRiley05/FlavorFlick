@@ -1,4 +1,4 @@
-import 'package:flavor_flick/screens/home_screen.dart';
+import 'package:flavor_flick/modules/home/src/screens/home_screen.dart';
 import 'package:flavor_flick/services/prefs_helper.dart';
 import 'package:flavor_flick/services/theme_notifier.dart';
 import 'package:flutter/material.dart';
