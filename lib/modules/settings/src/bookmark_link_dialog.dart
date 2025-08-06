@@ -32,7 +32,7 @@ class _BookmarkLinkDialogState extends State<BookmarkLinkDialog> {
     }
 
     final desktopPattern = RegExp(
-      r'^https://www\.openrice\.com/(en|zh)/gourmet/bookmarkrestaurant\.htm\?userid=.*&bpcatId=\d+$',
+      r'^https://www\.openrice\.com/(en|zh)/gourmet/bookmarkrestaurant\.htm\?userid=.*(&bpcatId=\d+)?$',
     );
     if (!desktopPattern.hasMatch(v)) {
       return 'Invalid OpenRice bookmark link. Please use the desktop version.';
