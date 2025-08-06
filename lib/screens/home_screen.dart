@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _updateBookmarkLink(String newLink) {
     setState(() {
       bookmarkLink = newLink;
-      _selectedIndex = 0; // Reset to Home screen
+      _selectedIndex = 0;
     });
   }
 
