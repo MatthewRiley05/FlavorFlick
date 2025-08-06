@@ -19,20 +19,12 @@ class MyApp extends StatelessWidget {
       title: 'FlavorFlick',
       theme: ThemeData(
         useMaterial3: true,
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: <TargetPlatform, PageTransitionsBuilder>{
-            TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-          },
-        ),
+        pageTransitionsTheme: kAndroidPageTransitionsTheme,
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: <TargetPlatform, PageTransitionsBuilder>{
-            TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-          },
-        ),
+        pageTransitionsTheme: kAndroidPageTransitionsTheme,
       ),
       themeMode: ThemeMode.system,
       home: HomeScreen(),
