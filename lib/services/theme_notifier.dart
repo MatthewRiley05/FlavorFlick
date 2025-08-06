@@ -17,8 +17,8 @@ class ThemeNotifier extends ChangeNotifier {
     await PrefService.instance.setString(PrefKey.themeMode, mode.name);
   }
 
-  void _load() {
-    final saved = PrefService.instance.getString(PrefKey.themeMode);
+  Future<void> _load() async {
+    final saved = await PrefService.instance.getString(PrefKey.themeMode);
     if (saved != null && ThemeMode.values.any((mode) => mode.name == saved)) {
       _themeMode = ThemeMode.values.byName(saved);
     }
