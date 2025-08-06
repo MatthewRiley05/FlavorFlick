@@ -30,6 +30,8 @@ class FlavorFlickApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = context.watch<ThemeNotifier>().themeMode;
+
     return MaterialApp(
       title: 'FlavorFlick',
       theme: ThemeData(
@@ -41,7 +43,7 @@ class FlavorFlickApp extends StatelessWidget {
         brightness: Brightness.dark,
         pageTransitionsTheme: defaultPageTransitionsTheme,
       ),
-      themeMode: ThemeMode.system,
+      themeMode: themeMode,
       home: HomeScreen(),
     );
   }
