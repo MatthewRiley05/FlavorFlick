@@ -41,27 +41,20 @@ class _BookmarkSettingsState extends State<BookmarkSettings> {
       spacing: 16,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            'Bookmark Settings',
-            style: TextStyle(
-              fontSize: 16,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-        ),
         Column(
           children: [
             ListTile(
-              leading: const Icon(Icons.bookmark_rounded),
+              leading: Icon(
+                Icons.bookmark_rounded,
+                color: Theme.of(context).colorScheme.primary,
+              ),
               title: const Text('OpenRice Bookmark Link'),
               subtitle: Text(
                 _bookmarkLink.isEmpty
                     ? 'Not configured'
                     : _bookmarkLink.length > 25
-                        ? '${_bookmarkLink.substring(0, 25)}...'
-                        : _bookmarkLink,
+                    ? '${_bookmarkLink.substring(0, 25)}...'
+                    : _bookmarkLink,
               ),
               trailing: const Icon(Icons.chevron_right_rounded),
               contentPadding: const EdgeInsets.symmetric(

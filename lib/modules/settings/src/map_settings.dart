@@ -41,20 +41,13 @@ class _MapSettingsState extends State<MapSettings> {
       spacing: 16,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            'Map Settings',
-            style: TextStyle(
-              fontSize: 16,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-        ),
         Column(
           children: [
             ListTile(
-              leading: const Icon(Icons.map_rounded),
+              leading: Icon(
+                Icons.map_rounded,
+                color: Theme.of(context).colorScheme.primary,
+              ),
               title: const Text('Search Type'),
               subtitle: Text(_selectedSearchType),
               trailing: const Icon(Icons.chevron_right_rounded),
