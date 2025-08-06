@@ -45,8 +45,8 @@ class _SwipeScreenState extends State<SwipeScreen> {
         'API Key loaded: ${apiKey.isNotEmpty ? "Yes (${apiKey.length} chars)" : "No"}',
       );
     }
-    _routes = RoutesService(apiKey);
     _initAndFetch();
+    _routes = RoutesService(apiKey);
   }
 
   Future<void> _initAndFetch() async {
@@ -74,7 +74,6 @@ class _SwipeScreenState extends State<SwipeScreen> {
 
       final pos = await _userLocation.current();
       if (pos != null) {
-        // Limit concurrent requests to avoid rate limits
         const int batchSize = 5;
         for (int i = 0; i < parsed.length; i += batchSize) {
           final batch = parsed.skip(i).take(batchSize).toList();
@@ -84,7 +83,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
                 final distanceResult = await _routes.distance(
                   originLat: pos.latitude,
                   originLng: pos.longitude,
-                  destAddress: b.address,
+                  destinationAddress: b.address,
                 );
                 b.distance = distanceResult;
                 debugPrint('Distance to ${b.name}: ${distanceResult?.pretty}');
@@ -95,6 +94,14 @@ class _SwipeScreenState extends State<SwipeScreen> {
           );
         }
       }
+
+      parsed.sort((a, b) {
+        if (a.distance == null && b.distance == null) return 0;
+        if (a.distance == null) return 1;
+        if (b.distance == null) return -1;
+
+        return a.distance!.meters.compareTo(b.distance!.meters);
+      });
 
       setState(() {
         _bookmarks = parsed;
