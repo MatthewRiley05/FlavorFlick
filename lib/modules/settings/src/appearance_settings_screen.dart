@@ -1,22 +1,24 @@
+import 'package:flavor_flick/services/theme_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class AppearanceSettingsScreen extends StatefulWidget {
+class AppearanceSettingsScreen extends StatelessWidget {
   const AppearanceSettingsScreen({super.key});
 
   @override
-  State<AppearanceSettingsScreen> createState() =>
-      _AppearanceSettingsScreenState();
-}
-
-class _AppearanceSettingsScreenState extends State<AppearanceSettingsScreen> {
-  String _selectedTheme = 'system';
-
-  @override
   Widget build(BuildContext context) {
+    final themeMode = context.watch<ThemeNotifier>().themeMode;
+
+    String selected = switch (themeMode) {
+      ThemeMode.light => 'light',
+      ThemeMode.dark => 'dark',
+      _ => 'system',
+    };
+
     return Scaffold(
       appBar: AppBar(title: const Text('Appearance Settings')),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 16,
@@ -29,19 +31,20 @@ class _AppearanceSettingsScreenState extends State<AppearanceSettingsScreen> {
               child: SizedBox(
                 width: double.infinity,
                 child: SegmentedButton<String>(
-                  segments: const <ButtonSegment<String>>[
-                    ButtonSegment<String>(
-                      value: 'system',
-                      label: Text('System'),
-                    ),
-                    ButtonSegment<String>(value: 'light', label: Text('Light')),
-                    ButtonSegment<String>(value: 'dark', label: Text('Dark')),
+                  segments: const [
+                    ButtonSegment(value: 'system', label: Text('System')),
+                    ButtonSegment(value: 'light', label: Text('Light')),
+                    ButtonSegment(value: 'dark', label: Text('Dark')),
                   ],
-                  selected: {_selectedTheme},
+                  selected: {selected},
+
                   onSelectionChanged: (Set<String> newSelection) {
-                    setState(() {
-                      _selectedTheme = newSelection.first;
-                    });
+                    final mode = switch (newSelection.first) {
+                      'light' => ThemeMode.light,
+                      'dark' => ThemeMode.dark,
+                      _ => ThemeMode.system,
+                    };
+                    context.read<ThemeNotifier>().setThemeMode(mode);
                   },
                 ),
               ),
