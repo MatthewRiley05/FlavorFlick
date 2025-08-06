@@ -10,6 +10,14 @@ void main() async {
   runApp(const MyApp());
 }
 
+PageTransitionsTheme get defaultPageTransitionsTheme {
+  return const PageTransitionsTheme(
+    builders: <TargetPlatform, PageTransitionsBuilder>{
+      TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+    },
+  );
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -19,12 +27,12 @@ class MyApp extends StatelessWidget {
       title: 'FlavorFlick',
       theme: ThemeData(
         useMaterial3: true,
-        pageTransitionsTheme: kAndroidPageTransitionsTheme,
+        pageTransitionsTheme: defaultPageTransitionsTheme,
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
-        pageTransitionsTheme: kAndroidPageTransitionsTheme,
+        pageTransitionsTheme: defaultPageTransitionsTheme,
       ),
       themeMode: ThemeMode.system,
       home: HomeScreen(),
