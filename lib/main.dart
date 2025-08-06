@@ -17,8 +17,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FlavorFlick',
-      theme: ThemeData(useMaterial3: true),
-      darkTheme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
+      theme: ThemeData(
+        useMaterial3: true,
+        pageTransitionsTheme: kAndroidPageTransitionsTheme,
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.dark,
+        pageTransitionsTheme: kAndroidPageTransitionsTheme,
+      ),
       themeMode: ThemeMode.system,
       home: HomeScreen(),
     );
