@@ -10,7 +10,7 @@ class RoutesService {
   Future<DistanceResult?> distance({
     required double originLat,
     required double originLng,
-    required String destAddress,
+    required String destinationAddress,
   }) async {
     const url = 'https://routes.googleapis.com/directions/v2:computeRoutes';
 
@@ -28,7 +28,7 @@ class RoutesService {
               'latLng': {'latitude': originLat, 'longitude': originLng},
             },
           },
-          'destination': {'address': destAddress},
+          'destination': {'address': destinationAddress},
           'travelMode': 'WALK',
         }),
       );
