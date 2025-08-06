@@ -1,6 +1,6 @@
-import 'package:flavor_flick/screens/history_screen.dart';
+import 'package:flavor_flick/modules/history/src/screens/history_screen.dart';
 import 'package:flavor_flick/modules/settings/src/screens/settings_screen.dart';
-import 'package:flavor_flick/screens/swipe_screen.dart';
+import 'package:flavor_flick/modules/swipe/src/screens/swipe_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
