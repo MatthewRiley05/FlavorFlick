@@ -1,13 +1,20 @@
 import 'package:flavor_flick/screens/home_screen.dart';
 import 'package:flavor_flick/services/prefs_helper.dart';
+import 'package:flavor_flick/services/theme_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PrefService.init();
   await dotenv.load();
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeNotifier(),
+      child: const FlavorFlickApp(),
+    ),
+  );
 }
 
 PageTransitionsTheme get defaultPageTransitionsTheme {
@@ -18,8 +25,8 @@ PageTransitionsTheme get defaultPageTransitionsTheme {
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class FlavorFlickApp extends StatelessWidget {
+  const FlavorFlickApp({super.key});
 
   @override
   Widget build(BuildContext context) {
