@@ -21,7 +21,9 @@ class ThemeNotifier extends ChangeNotifier {
   Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
     final saved = prefs.getString(_key);
-    if (saved != null) _themeMode = ThemeMode.values.byName(saved);
+    if (saved != null && ThemeMode.values.any((mode) => mode.name == saved)) {
+      _themeMode = ThemeMode.values.byName(saved);
+    }
     notifyListeners();
   }
 }
