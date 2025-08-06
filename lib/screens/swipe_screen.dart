@@ -45,8 +45,8 @@ class _SwipeScreenState extends State<SwipeScreen> {
         'API Key loaded: ${apiKey.isNotEmpty ? "Yes (${apiKey.length} chars)" : "No"}',
       );
     }
-    _initAndFetch();
     _routes = RoutesService(apiKey);
+    _initAndFetch();
   }
 
   Future<void> _initAndFetch() async {
