@@ -6,7 +6,7 @@ import 'package:flavor_flick/services/openrice_parser.dart';
 import 'package:flavor_flick/services/pref_keys.dart';
 import 'package:flavor_flick/services/prefs_helper.dart';
 import 'package:flavor_flick/services/routes_service.dart';
-import 'package:flavor_flick/widgets/card_container.dart';
+import 'package:flavor_flick/modules/home/src/card_container.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
