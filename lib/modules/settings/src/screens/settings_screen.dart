@@ -1,3 +1,4 @@
+import 'package:flavor_flick/modules/settings/src/appearance_settings.dart';
 import 'package:flavor_flick/modules/settings/src/bookmark_settings.dart';
 import 'package:flavor_flick/modules/settings/src/map_settings.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +23,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16),
         child: Column(
-          spacing: 16,
           children: [
             BookmarkSettings(onBookmarkSubmitted: widget.onBookmarkSubmitted),
+            AppearanceSettings(),
             MapSettings(onSearchTypeChanged: widget.onSearchTypeChanged),
           ],
         ),
